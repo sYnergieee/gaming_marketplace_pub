@@ -1,0 +1,93 @@
+<h1 mat-dialog-title>Изменение игры</h1>
+<div mat-dialog-content>
+  <form class="form" [formGroup]="form">
+    <img class="game-image" (click)="onOpenFileDialog('file-input')" [src]="displayImg()">
+          <input [ngStyle]="{'display':'none'}" (change)="fileImgChange($event)" id="file-input"
+            accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" />
+    <mat-form-field class="example-full-width">
+        <mat-label>Название игры</mat-label>
+        <input type="text" matInput formControlName="name">
+        <mat-error *ngIf="form.controls['name'].hasError('required')">
+        Название не должно быть пустым
+        </mat-error>
+        <mat-icon matSuffix>videogame_asset</mat-icon>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Описание</mat-label>
+        <textarea matInput formControlName="description"></textarea>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <mat-label>Дата выпуска</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-hint>день/месяц/год</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.controls['date'].hasError('required')">Дата не может быть пустой</mat-error>
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+        <input [type]="publInput.type" [placeholder]="publInput.label" matInput
+            [formControl]="publInput.formControl" [matAutocomplete]="autopubl">
+        <mat-autocomplete autoActiveFirstOption #autopubl="matAutocomplete">
+            <ng-container *ngFor="let option of publInput.values | async">
+            <mat-option [value]="option.name">
+                {{option.name}}
+            </mat-option>
+            <mat-divider></mat-divider>
+            </ng-container>
+        </mat-autocomplete>
+        <mat-error *ngIf="form.controls['publisher'].hasError('required')">Издатель не может быть пустым</mat-error>
+        <mat-icon matSuffix class="option_icon">{{publInput.icon}}</mat-icon>
+      </mat-form-field>
+  </form>
+  <h3>Платформы</h3>
+  <section class="example-section">
+      <mat-checkbox [(ngModel)]="ing.checked" *ngFor="let ing of platforms; let i = index" [ngModelOptions]="{standalone: true}">
+      {{ing.name}}
+      </mat-checkbox>
+  </section>
+  <h3>Жанры</h3>
+  <section class="example-section">
+      <mat-checkbox [(ngModel)]="ing.checked" *ngFor="let ing of genres; let i = index" [ngModelOptions]="{standalone: true}">
+        {{ing.name}}
+      </mat-checkbox>
+  </section>
+  <h3>Добавление характеристики</h3>
+  <form class="add_char_block" [formGroup]="formchar">
+    <mat-form-field class="example-full-width">
+      <input [type]="charInput.type" [placeholder]="charInput.label" matInput
+          [formControl]="charInput.formControl" [matAutocomplete]="autochar">
+      <mat-autocomplete autoActiveFirstOption #autochar="matAutocomplete">
+          <ng-container *ngFor="let option of charInput.values | async">
+          <mat-option [value]="option.name">
+              {{option.name}} {{option?.unit}}
+          </mat-option>
+          <mat-divider></mat-divider>
+          </ng-container>
+      </mat-autocomplete>
+      <mat-error *ngIf="formchar.controls['name'].hasError('required')">Характеристика не может быть пустой</mat-error>
+      <mat-icon matSuffix class="option_icon">{{charInput.icon}}</mat-icon>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Значение</mat-label>
+      <input type="text" matInput formControlName="value">
+      <mat-error *ngIf="formchar.controls['value'].hasError('required')">
+      Значение не должно быть пустым
+      </mat-error>
+  </mat-form-field>
+    <button mat-flat-button color="primary" [disabled]="formchar.invalid" (click)="addChartoGame()">Добавить</button>
+</form>
+<h3>Список характеристик</h3>
+  <div class="char_block" *ngFor="let ch of characteristics">
+    <mat-form-field>
+      <mat-label>{{ch.characteristic.name}}({{ch.characteristic?.unit}})</mat-label>
+      <input type="text" matInput value="{{ch.value}}" #input>
+    </mat-form-field>
+    <button mat-stroked-button color="primary" (click)="changeCharGame(ch.game_id, ch.characteristic_id, input.value)">Изменить</button>
+    <button mat-stroked-button color="warn" (click)="deleteCharGame(ch.game_id, ch.characteristic_id, input.value)">Удалить</button>
+  </div>
+</div>
+<div mat-dialog-actions class="buttons">
+  <button mat-flat-button color="primary" (click)="change()" [disabled]="form.invalid">Изменить игру</button>
+  <button mat-flat-button color="warn" (click)="delete()">Удалить игру</button>
+  <button mat-flat-button (click)="onNoClick()">Закрыть</button>
+</div>

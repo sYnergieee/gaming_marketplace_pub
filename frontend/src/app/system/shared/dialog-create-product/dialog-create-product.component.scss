@@ -1,0 +1,17 @@
+.example-full-width {
+    width: 100%;
+  }
+.buttons{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: center;
+    button{
+        min-width: 100px;
+    }
+}
+mat-radio-group{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}

@@ -1,0 +1,38 @@
+<div class="header">
+    <div class="inner_header">
+      <nav>
+        <ng-container *ngFor="let link of links">
+          <a *ngIf="isAccess(link.link)" routerLinkActive #rla="routerLinkActive" [ngStyle]="drawer(rla.isActive)"
+            [routerLink]="['/system',link.link]">
+            {{link.title}}
+          </a>
+        </ng-container>
+      </nav>
+      <div class="account_block">
+        <img [src]="img" class="avatar cover">
+      <div class="name_role">
+        <div class="name">
+          {{usr?.firstname}}
+        </div>
+        <div class="role">
+          {{usr?.role?.name}}
+        </div>
+      </div>
+      <div class="button_account">
+        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+          <mat-icon>keyboard_arrow_down</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu">
+          <button mat-menu-item (click)="goToProfile()">
+            <mat-icon>account_circle</mat-icon>
+            <span>Профиль</span>
+          </button>
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Выход</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </div>
+  

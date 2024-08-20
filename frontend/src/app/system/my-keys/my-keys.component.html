@@ -1,0 +1,28 @@
+<div class="container">
+    <div class="other_user_name" *ngIf="other_user_name">История {{other_user_name}}</div>
+    <mat-form-field class="example-full-width">
+        <mat-label>Поиск</mat-label>
+        <input type="search" matInput (input)="search($any($event.target).value)">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <ng-container *ngFor="let key of keys">
+        <mat-card
+            [ngClass]="{'neg_card': key?.customer_status_id == 3 || key?.customer_status_id == 4, 'pos_card': key?.customer_status_id == 2, 'neytr_card': key?.customer_status_id == 1}">
+            <mat-card-title-group>
+                <mat-card-title>{{key.key.product.game.name}}</mat-card-title>
+                <mat-card-subtitle (click)="goToUserPage(key.key.product.salesman_id)"
+                    [ngStyle]="{'cursor':'pointer', 'color': '#673ab7'}">Продавец:
+                    {{key.key.product.salesmans.user.nickname}}</mat-card-subtitle>
+                <mat-card-subtitle><span *ngIf="key.key?.code">Код ключа: {{key.key?.code}} <br></span> Дата покупки:
+                    {{key.purshase_date | date:"HH:mm - dd/MM/yyyy"}}</mat-card-subtitle>
+                <img mat-card-xl-image [src]="getImageGame(key.key.product.game.img)">
+            </mat-card-title-group>
+            <mat-card-content>
+                <div *ngIf="key.review">Отзыв: {{key.review}}</div>
+                <button mat-flat-button color="primary" *ngIf="!key.review && !other_user"
+                    (click)='addReview(key.product_id, key.key_id)'>Добавить отзыв</button>
+            </mat-card-content>
+        </mat-card>
+    </ng-container>
+    <button mat-flat-button color="primary" (click)="moveOffset()" *ngIf="show_button">Загрузить еще</button>
+</div>

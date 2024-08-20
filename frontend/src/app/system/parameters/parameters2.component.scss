@@ -1,0 +1,26 @@
+@import "../../../styles.scss";
+.container{
+    margin: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    .form{
+        display: flex;
+        column-gap: 30px;
+        flex-wrap: wrap;
+        button{
+            max-height: 40px;
+        }
+    }
+    .main_block{
+        max-height: 48vh;
+        overflow: scroll;
+        overflow-x: hidden;
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        row-gap: 10px;
+        mat-card{
+            flex-basis: 100%;
+        }
+    }
+}

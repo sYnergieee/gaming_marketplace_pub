@@ -1,0 +1,27 @@
+<h1 mat-dialog-title>Изменение продукта</h1>
+<div mat-dialog-content>
+    <form class="search_form filter" [formGroup]="form">
+        <mat-form-field class="example-full-width">
+            <input [type]="statInput.type" [placeholder]="statInput.label" matInput
+                [formControl]="statInput.formControl" [matAutocomplete]="autostat">
+            <mat-autocomplete autoActiveFirstOption #autostat="matAutocomplete">
+                <ng-container *ngFor="let option of statInput.values | async">
+                <mat-option [value]="option.name">
+                    {{option.name}}
+                </mat-option>
+                <mat-divider></mat-divider>
+                </ng-container>
+            </mat-autocomplete>
+            <mat-icon matSuffix class="option_icon">{{statInput.icon}}</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Отзыв</mat-label>
+            <textarea matInput formControlName="review"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions class="buttons">
+    <button mat-flat-button (click)="sendReview()" [disabled]="form.invalid" color="primary">Добавить отзыв</button>
+    <button mat-flat-button (click)="onNoClick()">Закрыть</button>
+</div>
+

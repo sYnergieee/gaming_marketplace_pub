@@ -1,0 +1,11 @@
+TOKEN_INVALID_SCOPE = 'Область действия токена недействительна.'
+TOKEN_EXPIRED = 'Срок действия токена истек'
+TOKEN_INVALID = 'Недействительный токен'
+REFRESH_TOKEN_INVALID_SCOPE = 'Недопустимая область действия токена'
+REFRESH_TOKEN_EXPIRED = 'Срок действия токена обновления истек'
+REFRESH_TOKEN_INVALID = 'Недействительный токен обновления'
+USER_REGISTER_INVALID = 'Пользователь с таким именем или email уже существует'
+USER_NOT_EXIST = 'Такой пользователь не существует'
+PASSWORD_INVALID = 'Неверный пароль'
+OBJECTS_NOT_FOUND = 'Ошибка получения'
+

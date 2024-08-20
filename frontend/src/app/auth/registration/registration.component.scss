@@ -1,0 +1,20 @@
+.signin{
+    max-height: 80% !important;
+    overflow: scroll;
+    overflow-x: hidden;
+}
+h2{
+    position: absolute;
+    top: 0;
+}
+.form{
+    margin-top: 50px;
+}
+@media screen and (max-width: 1000px) {
+    .form{
+        margin-top: 200px;
+    }
+    h2{
+        top: 20%;
+    }
+}

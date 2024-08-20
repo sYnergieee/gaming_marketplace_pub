@@ -1,0 +1,42 @@
+.buttons{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: center;
+    button{
+        min-width: 100px;
+    }
+}
+.example-full-width {
+    width: 100%;
+  }
+  .example-section{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    margin-bottom: 10px;
+}
+.char_block{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 10px;
+    margin-bottom: 10px;
+    button{
+        max-height: 40px;
+    }
+}
+.add_char_block{
+    margin: 10px 0;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    button{
+        max-height: 40px;
+    }
+}
+.game-image {
+    width: 250px;
+    height: 250px;
+    cursor: pointer;
+  }

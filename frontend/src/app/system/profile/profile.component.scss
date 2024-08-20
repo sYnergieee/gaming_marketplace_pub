@@ -1,0 +1,84 @@
+@import "../../../styles.scss";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.image_with_info_block {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.user-image {
+  width: 250px;
+  height: 250px;
+  cursor: pointer;
+}
+
+.main_info_block {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+
+  .form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+
+    mat-form-field {
+      min-width: 300px;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: center;
+    column-gap: 50px;
+
+    button {
+      min-width: 200px;
+    }
+
+    margin-top: 50px;
+  }
+}
+
+.adaptiv_br {
+  display: none;
+}
+
+p {
+  font-weight: 500;
+}
+
+.watch_button{
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 880px) {
+  .image_with_info_block {
+    flex-direction: column;
+
+    .adaptiv_br {
+      display: block;
+    }
+  }
+}
+
+@media screen and (max-width: 570px) {
+  .buttons {
+    align-items: center;
+    flex-direction: column;
+    row-gap: 30px;
+
+    button {
+      min-width: 250px !important;
+    }
+  }
+}

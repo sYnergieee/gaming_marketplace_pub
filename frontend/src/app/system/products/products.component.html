@@ -1,0 +1,109 @@
+<div class="container">
+    <mat-accordion class="accordion">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Описание игры
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-card class="card">
+                <mat-card-title-group>
+                    <mat-card-title>{{game?.name}}</mat-card-title>
+                    <mat-card-subtitle>{{game?.publishers.name}}</mat-card-subtitle>
+                    <img mat-card-xl-image [src]="getImageGame(game?.img)">
+                </mat-card-title-group>
+                <mat-card-content>
+                    <div>Дата выпуска: {{game?.release_date | date:"dd/MM/yy"}}</div>
+                    <div class="gen_plat">
+                        <div class="h_block">Жанры</div>
+                        <div class="label_gen_block">
+                            <div *ngFor="let g of game?.genres">{{g?.genre.name}}</div>
+                        </div>
+                        <div class="h_block">Платформы</div>
+                        <div class="label_gen_block">
+                            <div *ngFor="let p of game?.platforms">{{p?.platform.name}}</div>
+                        </div>
+                    </div>
+                    <div class="h_block">Описание</div>
+                    <div>{{game?.description}}</div>
+                    <div class="h_block">Характеристики</div>
+                    <div class="char_block">
+                        <div *ngFor="let ch of game?.characteristics">
+                            <span class="span_char">{{ch?.characteristic.name}}:</span> {{ch?.value}}
+                            {{ch?.characteristic?.unit}}
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </mat-expansion-panel>
+    </mat-accordion>
+    <div class="main_block">
+        <h1>Продукты</h1>
+        <form class="form" [formGroup]="form">
+            <mat-form-field class="example-full-width">
+                <input [type]="userInput.type" [placeholder]="userInput.label" matInput
+                    [formControl]="userInput.formControl" [matAutocomplete]="autouser">
+                <mat-autocomplete autoActiveFirstOption #autouser="matAutocomplete">
+                    <ng-container *ngFor="let option of userInput.values | async">
+                        <mat-option [value]="option.nickname">
+                            {{option.nickname}}
+                        </mat-option>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                </mat-autocomplete>
+                <mat-icon matSuffix class="option_icon">{{userInput.icon}}</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input [type]="platformInput.type" [placeholder]="platformInput.label" matInput
+                    [formControl]="platformInput.formControl" [matAutocomplete]="autoplat">
+                <mat-autocomplete autoActiveFirstOption #autoplat="matAutocomplete">
+                    <ng-container *ngFor="let option of platformInput.values | async">
+                        <mat-option [value]="option.name">
+                            {{option.name}}
+                        </mat-option>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                </mat-autocomplete>
+                <mat-icon matSuffix class="option_icon">{{platformInput.icon}}</mat-icon>
+            </mat-form-field>
+            <button mat-flat-button color="primary" (click)="applyFilter()">Применить фильтр</button>
+        </form>
+        <button mat-raised-button color="primary" *ngIf="usr?.role_id == 1" [ngStyle]="{'width': '90%'}"
+            (click)="addProduct()">Добавить продукт</button>
+        <mat-slide-toggle *ngIf="usr?.role_id == 3" (click)="matSlideClick()">Товар заблокирован: {{isBlocked ? 'Да' :
+            'Нет'}}</mat-slide-toggle>
+        <ng-container *ngFor="let item of products">
+            <mat-card class="card_product" [ngClass]="{'blocked': item.product_status_id==5}">
+                <mat-card-title>{{item.name}}</mat-card-title>
+                <mat-card-subtitle>Продано: {{item.in_stock['Продано']}} <br>В наличии: {{item.in_stock['В
+                    наличии']}}</mat-card-subtitle>
+                <mat-card-content>
+                    <mat-chip-list>
+                        <mat-chip color="primary" selected>{{item.platform.name}}</mat-chip>
+                    </mat-chip-list>
+                    <div (click)="goToUserPage(item.salesmans.id)" [ngStyle]="{'cursor':'pointer', 'color': '#673ab7'}">
+                        Продавец: {{item.salesmans.user.nickname}}</div>
+                    <div>Дата выставления: {{item.published_date | date:"HH:mm - dd/MM/yyyy"}}</div>
+                    <div>Стоимость: {{item.price}}</div>
+                    <div>Описание: {{item.description}}</div>
+                    <div class="buttons">
+                        <button *ngIf="usr?.role_id == 2" mat-flat-button color="primary" (click)="buyKey(item.id)"
+                            [disabled]="item.in_stock['В наличии']==0">Купить ключ</button>
+                        <button *ngIf="usr?.role_id == 3 || item.salesman_id == usr?.id" mat-icon-button
+                            matTooltip="Изменить продукт" color="primary" (click)="changeProduct(item.id)">
+                            <mat-icon>info</mat-icon>
+                        </button><button class="but" *ngIf="usr?.role_id == 3" mat-flat-button color="accent"
+                            (click)="blockProduct(item.name, item.price, item.game_id, item.description, item.id, item.product_status_id)">
+                            <span *ngIf="!isBlocked">Заблокировать продукт</span><span *ngIf="isBlocked">Разблокировать
+                                продукт</span></button>
+                    </div>
+                    <div class="products">
+                        <button mat-flat-button color="primary" (click)="goToReviewPage(item.id, item.salesman_id)"
+                            class="button_review">Открыть отзывы</button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </ng-container>
+        <button mat-flat-button color="primary" (click)="moveOffset()" *ngIf="show_button">Загрузить еще</button>
+    </div>
+</div>

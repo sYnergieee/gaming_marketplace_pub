@@ -1,0 +1,49 @@
+@import "../../../styles.scss";
+.container{
+    height: 60vh;
+    margin: 50px 20px;
+    display: flex;
+    overflow-x: scroll;
+    flex-direction: column;
+    .form{
+        display: flex;
+        justify-content: center;
+        column-gap: 30px;
+        button{
+            max-height: 40px;
+        }
+    }
+    .applications{
+        display: flex;
+        flex-direction: column;
+        min-width: 100%;
+        .table{
+          max-height: 700px !important;
+          overflow: scroll;
+        }
+      }
+      .mat-table__wrapper .mat-table {
+        min-width: auto !important;
+        width: 100% !important;
+      }
+      
+      .mat-header-row {
+        width: 100%;
+      }
+      
+      .mat-row {
+        width: 100%;
+      }
+      .mat-column-candidate_position {
+        flex: 0 0 10% !important;
+      }
+      .mat-column-name, .mat-column-nickname{
+        flex: 0 0 45% !important;
+      }
+   
+}
+@media screen and (max-width: 480px) {
+  .form{
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,17 @@
+pydantic==1.10.10
+psycopg2
+pydantic-sqlalchemy
+fastapi
+uvicorn[standard]
+email-validator
+passlib[bcrypt]
+python-jose[cryptography]
+gunicorn
+flower
+requests
+python-dotenv
+fastapi-mail==1.2.8
+deta
+pyjwt
+python-multipart
+pytest

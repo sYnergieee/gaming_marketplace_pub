@@ -1,0 +1,43 @@
+<div class="container">
+    <form class="form" [formGroup]="form">
+        <mat-form-field>
+            <mat-label>Название характеристики</mat-label>
+            <input type="text" matInput formControlName="name">
+            <mat-icon matSuffix>get_app</mat-icon>
+            <mat-error *ngIf="form.controls['name'].hasError('required')">Характиристика не должна быть пустой</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Единица</mat-label>
+            <input type="text" matInput formControlName="unit">
+            <mat-icon matSuffix>get_app</mat-icon>
+        </mat-form-field>
+        <button mat-flat-button color="primary" [disabled]="form.invalid" (click)="addCharacteristic()">Добавить характеристику</button>
+    </form>
+    <mat-form-field class="example-full-width">
+        <mat-label>Поиск</mat-label>
+        <input type="search" matInput (input)="search($any($event.target).value)">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <div class="main_block">
+        <ng-container *ngFor="let item of items">
+            <mat-card>
+                <mat-card-header>
+                    <mat-card-title>
+                        <mat-form-field>
+                            <mat-label>Название</mat-label>
+                            <input type="text" matInput value="{{item.name}}" #input>
+                        </mat-form-field>
+                        <mat-form-field>
+                            <mat-label>Единица</mat-label>
+                            <input type="text" matInput value="{{item.unit}}" #inputunit>
+                        </mat-form-field>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-actions align="end">
+                    <button mat-stroked-button color="primary" (click)="editCharacteristic(item.id,input.value, inputunit.value)">Сохранить</button>
+                    <button mat-stroked-button color="warn" (click)="deleteCharacteristic(item.id)">Удалить</button>
+                </mat-card-actions>
+            </mat-card>
+        </ng-container>
+    </div>
+</div>

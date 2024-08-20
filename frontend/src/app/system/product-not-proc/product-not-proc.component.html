@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="main_block">
+        <h1>Продукты</h1>
+        <mat-slide-toggle (click)="matSlideClick()">Товар заблокирован: {{isBlocked ? 'Да' :
+            'Нет'}}</mat-slide-toggle>
+        <ng-container *ngFor="let item of products">
+            <mat-card class="card_product" [ngClass]="{'blocked': item.product_status_id==5}">
+                <mat-card-title>{{item.name}}</mat-card-title>
+                <mat-card-subtitle>Игра: {{item.game.name}}<br>Продано: {{item.in_stock['Продано']}} <br>В наличии: {{item.in_stock['В
+                    наличии']}}</mat-card-subtitle>
+                <mat-card-content>
+                    <div (click)="goToUserPage(item.salesmans.id)" [ngStyle]="{'cursor':'pointer', 'color': '#673ab7'}">
+                        Продавец: {{item.salesmans.user.nickname}}</div>
+                    <div>Дата выставления: {{item.published_date | date:"HH:mm - dd/MM/yyyy"}}</div>
+                    <div>Стоимость: {{item.price}}</div>
+                    <div>Описание: {{item.description}}</div>
+                    <div class="buttons">
+                        <button *ngIf="usr?.role_id == 3 || item.salesman_id == usr?.id" mat-icon-button matTooltip="Изменить продукт" color="primary"
+                            (click)="changeProduct(item.id)">
+                            <mat-icon>info</mat-icon>
+                        </button><button class="but" *ngIf="usr?.role_id == 3" mat-flat-button color="accent"
+                            (click)="blockProduct(item.name, item.price, item.game_id, item.description, item.id, item.product_status_id)">
+                            <span *ngIf="!isBlocked">Заблокировать продукт</span><span
+                                *ngIf="isBlocked">Разблокировать продукт</span></button>
+                    </div>
+                    <div class="products">
+                        <button mat-flat-button color="primary" (click)="goToReviewPage(item.id, item.salesman_id)" class="button_review">Открыть отзывы</button>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </ng-container>
+    </div>
+</div>

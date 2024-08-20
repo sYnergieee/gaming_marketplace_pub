@@ -1,0 +1,88 @@
+<h1 mat-dialog-title>Отзывы</h1>
+<mat-accordion mat-dialog-title class="accordion">
+    <mat-expansion-panel>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                Фильтр
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <form class="filter" [formGroup]="form">
+            <mat-form-field class="example-full-width">
+                <input [type]="custInput.type" [placeholder]="custInput.label" matInput
+                    [formControl]="custInput.formControl" [matAutocomplete]="autocust">
+                <mat-autocomplete autoActiveFirstOption #autocust="matAutocomplete">
+                    <ng-container *ngFor="let option of custInput.values | async">
+                        <mat-option [value]="option.nickname">
+                            {{option.nickname}}
+                        </mat-option>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                </mat-autocomplete>
+                <mat-icon matSuffix class="option_icon">{{statInput.icon}}</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <input [type]="statInput.type" [placeholder]="statInput.label" matInput
+                    [formControl]="statInput.formControl" [matAutocomplete]="autostat">
+                <mat-autocomplete autoActiveFirstOption #autostat="matAutocomplete">
+                    <ng-container *ngFor="let option of statInput.values | async">
+                        <mat-option [value]="option.name">
+                            {{option.name}}
+                        </mat-option>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                </mat-autocomplete>
+                <mat-icon matSuffix class="option_icon">{{usesInput.icon}}</mat-icon>
+            </mat-form-field>
+            <mat-form-field class="example-full-width" *ngIf="data.self_user_or_admin">
+                <input [type]="usesInput.type" [placeholder]="usesInput.label" matInput
+                    [formControl]="usesInput.formControl" [matAutocomplete]="autous">
+                <mat-autocomplete autoActiveFirstOption #autous="matAutocomplete">
+                    <ng-container *ngFor="let option of usesInput.values | async">
+                        <mat-option [value]="option.name">
+                            {{option.name}}
+                        </mat-option>
+                        <mat-divider></mat-divider>
+                    </ng-container>
+                </mat-autocomplete>
+                <mat-icon matSuffix class="option_icon">{{usesInput.icon}}</mat-icon>
+            </mat-form-field>
+            <button mat-flat-button color="primary" (click)="applyFilter()">Применить фильтр</button>
+        </form>
+    </mat-expansion-panel>
+</mat-accordion>
+<div mat-dialog-content>
+    <div class="keys_list">
+        <ng-container *ngFor="let key of keys">
+            <mat-card
+                [ngClass]="{'neg_card': key?.cust_prod?.customer_status_id == 3 || key?.cust_prod?.customer_status_id == 4, 'pos_card': key?.cust_prod?.customer_status_id == 2, 'neytr_card': key?.cust_prod?.customer_status_id == 1}">
+                <mat-card-title-group>
+                    <mat-card-subtitle *ngIf="key?.cust_prod">Дата: {{key?.cust_prod?.purshase_date | date:"HH:mm -
+                        dd/MM/yyyy"}}</mat-card-subtitle>
+                    <mat-card-subtitle *ngIf="key?.cust_prod" (click)="goToUserPage(key?.cust_prod?.customer_id)"
+                        [ngStyle]="{'cursor':'pointer', 'color': '#673ab7'}">
+                        Покупатель: {{key?.cust_prod?.customers?.user?.nickname}}
+                    </mat-card-subtitle>
+                    <mat-card-subtitle>
+                        {{key.code}}
+                    </mat-card-subtitle>
+                    <mat-card-subtitle>Используется: {{key.is_used ? 'Да' : 'Нет'}}</mat-card-subtitle>
+                </mat-card-title-group>
+                <mat-card-content>
+                    {{key?.cust_prod?.review}}
+                    <button mat-flat-button color="warn" *ngIf="!key.is_used && data.self_user_or_admin"
+                        (click)="deleteKey(key.id)">Удалить
+                        ключ</button>
+                    <button mat-stroked-button color="primary"
+                        *ngIf="key?.cust_prod?.customer_status_id == 3 && usr.role_id == 3"
+                        class="changestatprod_button"
+                        (click)="changeStatCustProd(key.cust_prod.product_id, key.cust_prod.key_id, key.cust_prod.review, 4, key.cust_prod.customer_id)">Обработать
+                        отзыв</button>
+                </mat-card-content>
+            </mat-card>
+        </ng-container>
+        <button mat-flat-button color="primary" (click)="moveOffset()" *ngIf="show_button">Загрузить еще</button>
+    </div>
+</div>
+<div mat-dialog-actions class="buttons">
+    <button mat-flat-button (click)="onNoClick()">Закрыть</button>
+</div>

@@ -1,0 +1,28 @@
+<mat-drawer-container class="example-container" [hasBackdrop]="hasBackdrop">
+    <mat-drawer #drawer [mode]="mode" class="drawer">
+            <h2>Параметры</h2>
+            <a [ngStyle]="genres && {'color':color, 'font-weight':600} || null" (click)="clickFilter(1)">Жанры</a>
+            <a [ngStyle]="publishers && {'color':color, 'font-weight':600} || null" (click)="clickFilter(2)">Издатели</a>
+            <a [ngStyle]="characteristics && {'color':color, 'font-weight':600} || null" (click)="clickFilter(3)">Характеристики</a>
+            <a [ngStyle]="platforms && {'color':color, 'font-weight':600} || null" (click)="clickFilter(4)">Платформы</a>
+    </mat-drawer>
+    <mat-drawer-content fullscreen class="drawer_content">
+      <button mat-button (click)="drawer.toggle()" class="side_button"><mat-icon>navigate_next</mat-icon></button>
+      <div class="container">
+        <div class="left_container">
+            <h2>Параметры</h2>
+            <a [ngStyle]="genres && {'color':color, 'font-weight':600} || null" (click)="clickFilter(1)">Жанры</a>
+            <a [ngStyle]="publishers && {'color':color, 'font-weight':600} || null" (click)="clickFilter(2)">Издатели</a>
+            <a [ngStyle]="characteristics && {'color':color, 'font-weight':600} || null" (click)="clickFilter(3)">Характеристики</a>
+            <a [ngStyle]="platforms && {'color':color, 'font-weight':600} || null" (click)="clickFilter(4)">Платформы</a>
+        </div>
+
+        <div class="right_container">
+            <app-characteristics *ngIf="characteristics == true"></app-characteristics>
+            <app-genres *ngIf="genres == true"></app-genres>
+            <app-publishers *ngIf="publishers == true"></app-publishers>
+            <app-platforms *ngIf="platforms == true"></app-platforms>
+        </div>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>

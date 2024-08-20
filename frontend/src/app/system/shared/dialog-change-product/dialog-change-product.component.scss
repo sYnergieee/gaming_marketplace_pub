@@ -1,0 +1,12 @@
+.example-full-width {
+    width: 100%;
+  }
+.buttons{
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: center;
+    button{
+        min-width: 100px;
+    }
+}

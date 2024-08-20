@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="watch_button">
+    <button mat-flat-button color="primary" (click)="goToSalesHist()" *ngIf="other_user!=null && other_user?.role_id == 1">История продаж</button>
+    <button mat-flat-button color="primary" (click)="goToCustHist()" *ngIf="other_user!=null && other_user?.role_id == 2">История покупок</button>
+  </div>
+  <div class="image_with_info_block">
+    <div>
+      <img class="user-image" (click)="onOpenFileDialog('file-input')" [src]="displayImg()">
+      <input [ngStyle]="{'display':'none'}" (change)="fileImgChange($event)" id="file-input"
+        accept=".jpg, .jpeg, .png, .gif, .bmp" type="file" />
+    </div>
+    <div class="info">
+      <p>Дата регистрации: {{usr?.reg_date | date:"dd/MM/yy"}}</p>
+      <ng-container *ngIf="other_user==null">
+        <p *ngIf="usr?.role_id == 2">Количество покупок: {{usr.customers?.count_purshase}}
+          <br>Хороших отзывов: {{usr?.customers.count_reviews['Хороших отзывов']}}
+          <br>Плохих отзывов: {{usr?.customers.count_reviews['Плохих отзывов']}}
+        </p>
+        <p *ngIf="usr?.role_id == 1">Количество продаж: {{usr.salesmans?.info_salesman['Количество продаж']}}
+          <br>Заработано без учета комиссии:<br class="adaptiv_br"> {{usr?.salesmans.info_salesman['Заработано без учета
+          комиссии']}}
+          <br>Заработано с учетом комиссии (5%):<br class="adaptiv_br"> {{usr?.salesmans.info_salesman['Заработано с
+          учетом комиссии']}}
+          <br>Хороших отзывов: {{usr?.salesmans.info_salesman['Хороших отзывов']}}
+          <br>Плохих отзывов: {{usr?.salesmans.info_salesman['Плохих отзывов']}}
+        </p>
+      </ng-container>
+      <ng-container *ngIf="other_user">
+        <p *ngIf="other_user?.role_id == 2">Количество покупок: {{other_user.customers?.count_purshase}}
+          <br>Хороших отзывов: {{other_user?.customers.count_reviews['Хороших отзывов']}}
+          <br>Плохих отзывов: {{other_user?.customers.count_reviews['Плохих отзывов']}}
+        </p>
+        <p *ngIf="other_user?.role_id == 1">Количество продаж: {{other_user.salesmans?.info_salesman['Количество
+          продаж']}}
+          <br>Заработано без учета комиссии:<br class="adaptiv_br"> {{other_user?.salesmans.info_salesman['Заработано
+          без учета
+          комиссии']}}
+          <br>Заработано с учетом комиссии (5%):<br class="adaptiv_br">
+          {{other_user?.salesmans.info_salesman['Заработано с
+          учетом комиссии']}}
+          <br>Хороших отзывов: {{other_user?.salesmans.info_salesman['Хороших отзывов']}}
+          <br>Плохих отзывов: {{other_user?.salesmans.info_salesman['Плохих отзывов']}}
+        </p>
+      </ng-container>
+    </div>
+  </div>
+  <div class="main_info_block">
+    <form class="form" [formGroup]="form">
+      <mat-form-field>
+        <mat-label>Никнейм</mat-label>
+        <input type="text" matInput formControlName="nickname" placeholder="john" [readonly]="check_for_readonly">
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="form.controls['nickname'].hasError('required')">Никнейм не может быть пустым</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input type="email" matInput formControlName="email" placeholder="pat@example.com"
+          [readonly]="check_for_readonly">
+        <mat-icon matSuffix>email</mat-icon>
+        <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Имя</mat-label>
+        <input type="text" matInput formControlName="firstname" [readonly]="check_for_readonly">
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="form.controls['firstname'].hasError('required')">Имя не может быть пустым</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Фамилия</mat-label>
+        <input type="text" matInput formControlName="lastname" placeholder="Oslo" [readonly]="check_for_readonly">
+        <mat-icon matSuffix>person</mat-icon>
+        <mat-error *ngIf="form.controls['lastname'].hasError('required')">Фамилия не может быть пустой</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Дата рождения</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthdate" [readonly]="check_for_readonly">
+        <mat-hint>день/месяц/год</mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="check_for_readonly"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.controls['birthdate'].hasError('required')">Дата не может быть пустой</mat-error>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="!check_for_readonly">
+        <mat-label>Введити пароль(если хотите изменить)</mat-label>
+        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+        <mat-icon matSuffix>key</mat-icon>
+        <mat-error *ngIf="form.controls['password'].hasError('required')">Пароль не может быть пустым</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Телеграм</mat-label>
+        <input type="text" matInput formControlName="telegram" placeholder="@john" [readonly]="check_for_readonly">
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Дискорд</mat-label>
+        <input type="text" matInput formControlName="discord" placeholder="john" [readonly]="check_for_readonly">
+        <mat-icon matSuffix>phone</mat-icon>
+      </mat-form-field>
+    </form>
+    <div class="buttons">
+      <button mat-flat-button color="primary" (click)="saveChanges()" [disabled]="form.invalid" *ngIf="other_user==null">Сохранить
+        изменения</button>
+      <button mat-flat-button color="warn" (click)="deleteAccount()" *ngIf="usr?.role_id == 3">Удалить аккаунт</button>
+    </div>
+  </div>
+</div>

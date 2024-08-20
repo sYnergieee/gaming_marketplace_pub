@@ -1,0 +1,45 @@
+.container {
+    margin: 10px 20px;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 10px;
+    margin-bottom: 20px;
+    mat-card {
+        width: 80%;
+    }
+
+    mat-card-title-group {
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.neg_card {
+    border: 2px solid red;
+}
+
+.pos_card {
+    border: 2px solid green;
+}
+
+.neytr_card {
+    border: 2px solid gainsboro
+}
+
+.example-full-width {
+    width: 100%;
+}
+
+.other_user_name {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
+@media screen and (max-width: 500px) {
+    mat-card {
+        width: 100% !important;
+    }
+}

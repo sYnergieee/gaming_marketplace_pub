@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>Изменение продукта</h1>
+<div mat-dialog-content>
+    <form class="form" [formGroup]="form">
+        <mat-form-field class="example-full-width">
+            <mat-label>Название продукта</mat-label>
+            <input type="text" matInput formControlName="name">
+            <mat-error *ngIf="form.controls['name'].hasError('required')">
+            Название не должно быть пустым
+            </mat-error>
+            <mat-icon matSuffix>videogame_asset</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Цена</mat-label>
+            <input type="number" matInput formControlName="price">
+            <mat-error *ngIf="form.controls['price'].hasError('required')">
+            Цена не должна быть пустой
+            </mat-error>
+            <mat-icon matSuffix>attach_money</mat-icon>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <mat-label>Описание</mat-label>
+            <textarea matInput formControlName="description"></textarea>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions class="buttons">
+    <button mat-stroked-button color="primary" [disabled]="form.invalid" (click)="changeProduct()">Изменить продукт</button>
+    <button mat-flat-button (click)="onNoClick()">Закрыть</button>
+</div>

@@ -1,0 +1,100 @@
+<body>
+
+    <section> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> <span></span> 
+  
+     <div class="signin"> 
+  
+      <div class="content"> 
+  
+       <h2>Регистрация</h2> 
+  
+       <form class="form" [formGroup]="form">
+
+        <mat-form-field>
+          <mat-label>Никнейм</mat-label>
+          <input type="text" matInput formControlName="nickname" placeholder="john">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="form.controls['nickname'].hasError('required')">Никнейм не может быть пустым</mat-error>
+        </mat-form-field>
+        
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="email" matInput formControlName="email" placeholder="pat@example.com">
+          <mat-icon matSuffix>email</mat-icon>
+          <mat-error *ngIf="form.controls['email'].invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Имя</mat-label>
+          <input type="text" matInput formControlName="firstname" placeholder="John">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="form.controls['firstname'].hasError('required')">Имя не может быть пустым</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Фамилия</mat-label>
+          <input type="text" matInput formControlName="lastname" placeholder="Oslo">
+          <mat-icon matSuffix>person</mat-icon>
+          <mat-error *ngIf="form.controls['lastname'].hasError('required')">Фамилия не может быть пустой</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="select_input">
+          <input [type]="roleInput.type" [placeholder]="roleInput.label" matInput
+              [formControl]="roleInput.formControl" [matAutocomplete]="autorole">
+            <mat-autocomplete autoActiveFirstOption #autorole="matAutocomplete">
+              <ng-container *ngFor="let option of roleInput.values | async">
+                <mat-option [value]="option.name">
+                  {{option.name}}
+                </mat-option>
+                <mat-divider></mat-divider>
+              </ng-container>
+            </mat-autocomplete>
+            <mat-error *ngIf="form.controls['role'].hasError('required')">Роль не может быть пустой</mat-error>
+            <mat-icon matSuffix class="option_icon">{{roleInput.icon}}</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="isAdmin()">
+          <mat-label>Код доступа</mat-label>
+          <input type="text" matInput formControlName="key">
+          <mat-icon matSuffix>key</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Дата рождения</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="birthdate">
+          <mat-hint>день/месяц/год</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.controls['birthdate'].hasError('required')">Дата не может быть пустой</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Введити пароль</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password">
+            <mat-icon matSuffix>key</mat-icon>
+            <mat-error *ngIf="form.controls['password'].hasError('required')">Пароль не может быть пустым</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Телеграм</mat-label>
+            <input type="text" matInput formControlName="telegram" placeholder="@john">
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-label>Дискорд</mat-label>
+            <input type="text" matInput formControlName="discord" placeholder="john">
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+        <div class="links"><a [routerLink]="['/auth/login']">Авторизация</a> </div>     
+        
+        <button mat-raised-button color="primary" (click)="signup()" [disabled]="form.invalid">Зарегистрироваться</button>
+        </form>
+  
+      </div> 
+  
+     </div> 
+  
+    </section>
+  
+   </body>
